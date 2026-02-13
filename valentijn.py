@@ -7,12 +7,24 @@ st.set_page_config(
     layout="centered"
 )
 
+# Alles roze maken via CSS
+st.markdown(
+    """
+    <style>
+        html, body, [class*="css"]  {
+            color: #ff69b4 !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("hihi ik heb een vraagje")
 st.subheader("Wil je mijn Valentijn zijn? 🌹")
 
 components.html(
     """
-    <div style="text-align:center;">
+    <div style="text-align:center; color:#ff69b4;">
 
         <div id="container"
             style="
@@ -31,7 +43,7 @@ components.html(
                     position: absolute;
                     left: 25%;
                     top: 50%;
-                    transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%) scale(1);
                     padding: 14px 30px;
                     font-size: 18px;
                     border-radius: 18px;
@@ -39,6 +51,7 @@ components.html(
                     background-color: #ff69b4;
                     color: white;
                     cursor: pointer;
+                    transition: transform 0.2s ease;
                 ">
                 Ja 💕
             </button>
@@ -59,11 +72,11 @@ components.html(
                     cursor: pointer;
                     user-select: none;
                 ">
-                Nee 
+                Nee
             </button>
         </div>
 
-        <h3 id="result"></h3>
+        <h3 id="result" style="color:#ff69b4;"></h3>
     </div>
 
     <script>
@@ -76,15 +89,8 @@ components.html(
         function moveNee() {
             count++;
 
-            if (count >= 5) {
-                neeBtn.innerText = "Ja 💕";
-                neeBtn.style.backgroundColor = "#ff69b4";
-                neeBtn.style.left = "50%";
-                neeBtn.style.top = "50%";
-                neeBtn.style.transform = "translate(-50%, -50%)";
-                neeBtn.onclick = sayYes;
-                return;
-            }
+            // JA knop steeds groter maken
+            jaBtn.style.transform = "translate(-50%, -50%) scale(" + (1 + count * 0.15) + ")";
 
             const maxX = container.clientWidth - neeBtn.offsetWidth;
             const maxY = container.clientHeight - neeBtn.offsetHeight;
@@ -96,6 +102,7 @@ components.html(
 
         function sayYes() {
             result.innerHTML = "💖 OMGG jaaaa nu ben ik happyyyy.💖";
+            document.body.style.background = "linear-gradient(135deg, #ffb6c1, #ff69b4)";
             confetti();
         }
 
