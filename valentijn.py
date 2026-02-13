@@ -9,81 +9,124 @@ st.set_page_config(
 
 st.title("💘 Een belangrijke vraag...")
 st.subheader("Wil je mijn Valentijn zijn? 🌹")
-st.markdown("*(Nee zeggen is optioneel 😏)*")
 
-# Echte JA-knop (Streamlit)
-if st.button("Ja 💕"):
-    st.balloons()
-    st.success("YES!! 💖🥰 Beste Valentijn ooit!")
-    st.write("Dit wordt iconisch 🍫✨")
-
-st.write("")  # spacing
-
-# Evil knop met JS (werkt op mobiel & desktop)
 components.html(
     """
-    <div id="container"
-         style="
-            height:180px;
-            position:relative;
-            width:100%;
-            max-width:350px;
-            margin:auto;
-            border-radius:16px;
-         ">
+    <div style="text-align:center;">
 
-        <button id="trickBtn"
+        <div id="container"
             style="
-                position:absolute;
-                left:35%;
-                top:40%;
-                padding:14px 28px;
-                font-size:18px;
-                border-radius:16px;
-                border:none;
-                background-color:#ff4b4b;
-                color:white;
-                cursor:pointer;
-                transition: 0.15s;
+                position: relative;
+                width: 100%;
+                max-width: 360px;
+                height: 200px;
+                margin: 20px auto;
+                overflow: hidden;
+                border-radius: 20px;
             ">
-            Nee 🙈
-        </button>
+
+            <!-- JA KNOP -->
+            <button id="jaBtn"
+                style="
+                    position: absolute;
+                    left: 25%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    padding: 14px 30px;
+                    font-size: 18px;
+                    border-radius: 18px;
+                    border: none;
+                    background-color: #ff69b4;
+                    color: white;
+                    cursor: pointer;
+                ">
+                Ja 💕
+            </button>
+
+            <!-- NEE KNOP -->
+            <button id="neeBtn"
+                style="
+                    position: absolute;
+                    left: 75%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    padding: 14px 30px;
+                    font-size: 18px;
+                    border-radius: 18px;
+                    border: none;
+                    background-color: #ff4b4b;
+                    color: white;
+                    cursor: pointer;
+                    user-select: none;
+                ">
+                Nee 🙈
+            </button>
+        </div>
+
+        <h3 id="result"></h3>
     </div>
 
     <script>
         let count = 0;
-        const btn = document.getElementById("trickBtn");
+        const neeBtn = document.getElementById("neeBtn");
+        const jaBtn = document.getElementById("jaBtn");
+        const result = document.getElementById("result");
         const container = document.getElementById("container");
 
-        function moveButton() {
+        function moveNee() {
             count++;
 
             if (count >= 5) {
-                btn.innerText = "Ja 💕";
-                btn.style.backgroundColor = "#ff69b4";
-                btn.onclick = () => {
-                    alert("🎉 Goede keuzes 
-                😌💖");
-                };
+                neeBtn.innerText = "Ja 💕";
+                neeBtn.style.backgroundColor = "#ff69b4";
+                neeBtn.style.left = "50%";
+                neeBtn.style.top = "50%";
+                neeBtn.style.transform = "translate(-50%, -50%)";
+                neeBtn.onclick = sayYes;
                 return;
             }
 
-            const maxX = container.clientWidth - btn.clientWidth;
-            const maxY = container.clientHeight - btn.clientHeight;
+            const maxX = container.clientWidth - neeBtn.offsetWidth;
+            const maxY = container.clientHeight - neeBtn.offsetHeight;
 
-            const randX = Math.random() * maxX;
-            const randY = Math.random() * maxY;
-
-            btn.style.left = randX + "px";
-            btn.style.top = randY + "px";
+            neeBtn.style.left = Math.random() * maxX + "px";
+            neeBtn.style.top = Math.random() * maxY + "px";
+            neeBtn.style.transform = "none";
         }
 
-        // Desktop
-        btn.addEventListener("mouseover", moveButton);
+        function sayYes() {
+            result.innerHTML = "💖 YES!! Beste Valentijn ooit 💖";
+            confetti();
+        }
 
-        // Mobiel
-        btn.addEventListener("touchstart", moveButton);
+        function confetti() {
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement("div");
+                heart.innerHTML = "💖";
+                heart.style.position = "fixed";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "-20px";
+                heart.style.fontSize = "24px";
+                heart.style.animation = "fall 3s linear";
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        neeBtn.addEventListener("pointerenter", moveNee);
+        neeBtn.addEventListener("pointerdown", moveNee);
+        jaBtn.onclick = sayYes;
     </script>
+
+    <style>
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+        }
+    </style>
     """,
-    height=220
+    height=320
 )
