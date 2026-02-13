@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("💘 Een belangrijke vraag...")
+st.title("hihi ik heb een vraagje")
 st.subheader("Wil je mijn Valentijn zijn? 🌹")
 
 components.html(
@@ -59,7 +59,7 @@ components.html(
                     cursor: pointer;
                     user-select: none;
                 ">
-                Nee 🙈
+                Nee 
             </button>
         </div>
 
@@ -95,7 +95,7 @@ components.html(
         }
 
         function sayYes() {
-            result.innerHTML = "💖 YES!! Beste Valentijn ooit 💖";
+            result.innerHTML = "💖 OMGG jaaaa nu ben ik happyyyy.💖";
             confetti();
         }
 
