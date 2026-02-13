@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Alles roze maken via CSS
+# Alle tekst roze maken
 st.markdown(
     """
     <style>
@@ -89,8 +89,14 @@ components.html(
         function moveNee() {
             count++;
 
-            // JA knop steeds groter maken
+            // Ja knop groter maken
             jaBtn.style.transform = "translate(-50%, -50%) scale(" + (1 + count * 0.15) + ")";
+
+            // Na 5 keer verdwijnt Nee knop
+            if (count >= 5) {
+                neeBtn.style.display = "none";
+                return;
+            }
 
             const maxX = container.clientWidth - neeBtn.offsetWidth;
             const maxY = container.clientHeight - neeBtn.offsetHeight;
@@ -102,7 +108,6 @@ components.html(
 
         function sayYes() {
             result.innerHTML = "💖 OMGG jaaaa nu ben ik happyyyy.💖";
-            document.body.style.background = "linear-gradient(135deg, #ffb6c1, #ff69b4)";
             confetti();
         }
 
