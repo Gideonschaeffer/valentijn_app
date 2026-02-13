@@ -77,6 +77,11 @@ components.html(
         </div>
 
         <h3 id="result" style="color:#ff69b4;"></h3>
+
+        <div id="nextStep" style="margin-top:20px;"></div>
+
+        <div id="datePlan" style="margin-top:20px; font-size:18px;"></div>
+
     </div>
 
     <script>
@@ -85,14 +90,14 @@ components.html(
         const jaBtn = document.getElementById("jaBtn");
         const result = document.getElementById("result");
         const container = document.getElementById("container");
+        const nextStep = document.getElementById("nextStep");
+        const datePlan = document.getElementById("datePlan");
 
         function moveNee() {
             count++;
 
-            // Ja knop groter maken
             jaBtn.style.transform = "translate(-50%, -50%) scale(" + (1 + count * 0.15) + ")";
 
-            // Na 5 keer verdwijnt Nee knop
             if (count >= 5) {
                 neeBtn.style.display = "none";
                 return;
@@ -109,6 +114,30 @@ components.html(
         function sayYes() {
             result.innerHTML = "💖 OMGG jaaaa nu ben ik happyyyy.💖";
             confetti();
+
+            // Nieuwe knop tonen
+            nextStep.innerHTML = `
+                <button onclick="showPlan()" 
+                    style="
+                        padding:12px 25px;
+                        font-size:16px;
+                        border-radius:15px;
+                        border:none;
+                        background-color:#ff69b4;
+                        color:white;
+                        cursor:pointer;
+                        margin-top:10px;
+                    ">
+                    Wat gaan we doen? 👀
+                </button>
+            `;
+        }
+
+        function showPlan() {
+            datePlan.innerHTML = `
+                💕 we gaan eerst samen iets drinken bij camelot!<br><br>
+                🎬 Daarna samen een filmpje kijken en knuffelenn
+            `;
         }
 
         function confetti() {
@@ -140,5 +169,5 @@ components.html(
         }
     </style>
     """,
-    height=320
+    height=500
 )
